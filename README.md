@@ -96,3 +96,77 @@ const main = async () => {
 };
 
 main();
+```
+
+## Test Types
+### AIResponseTest
+This uses a second LLM call to verify the output of the first.  It allows for natural
+language tests, but obviously it suffers from the same LLM prompt limitations that all 
+LLM calls do.  
+
+*Tip:* If you're having trouble making this test reliable, try using a better LLM. 
+There's no need to use the same LLM as the original request.  In fact, it's often better
+to use a more advanced LLM for these tests.
+
+```javascript
+{
+    type: "AIResponseTest",
+    llmType: {
+        provider: "openAI",
+        model: "gpt-3.5-turbo"
+    },
+    should: "javascript code to add two numbers"
+}
+```
+
+### SizeResponseTest
+This test checks the size of the response.  It can be used to ensure that the response
+is within a certain size range, or that it's at least a certain size.  This is useful
+for ensuring that the LLM is providing enough information, but not too much.
+
+```javascript
+{
+    type: "SizeResponseTest",
+    minChars: 10,
+    maxChars: 10000,
+    minWords: 3,
+    maxWords: 1000
+}
+```
+
+### FormatResponseTest
+This test checks the format of the response.  It can be used to ensure that the response
+is in a certain format, such as JSON, XML, or a specific programming language.
+
+```javascript
+{
+    type: "FormatResponseTest",
+    expectedFormat: "javascript",
+}
+```
+
+### NSFWResponseTest
+This test checks the response for NSFW content.  It can be used to ensure that the response
+is safe for work, or to filter out responses that are not.
+
+As with the AIResponseTest, this test uses a second LLM call to verify the output of the first.
+It may not catch all NSFW content, but it can be a useful filter.
+
+```javascript
+{
+    type: "NSFWResponseTest",
+    llmType: {
+        provider: "openAI",
+        model: "gpt-3.5-turbo"
+    },
+}
+```
+
+## Contributing
+Feel free to dive in! Open an issue or submit PRs.
+
+We follow the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+
+## License
+
+[MIT](LICENSE) © Calibrtr.com
