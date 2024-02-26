@@ -17,15 +17,11 @@ You can add LLM Prompt Test to your project in two ways:
 
 #### Option 1: Install via npm
 
-Use npm (Node Package Manager) to quickly add LLM Prompt Test to your project with the following command:
-
 ```bash 
 npm install llm-prompt-test
 ```
 
 #### Option 2: Install from Source
-
-If you prefer to work with the source code directly or want to contribute to the project, clone the repository using Git:
 
 ```bash
 git clone https://github.com/calibrtr/llm-prompt-test.git
