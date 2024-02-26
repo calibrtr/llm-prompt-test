@@ -29,3 +29,6 @@ export {
     LLMAdapter
 } from "./aiAdapters/llmAdapter.js";
 
+export {
+    configureCachingLLMs
+} from "./aiAdapters/cachingFactory.js";

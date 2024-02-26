@@ -1,7 +1,7 @@
 import {executeLLM, testLLMResponse} from "../promptTesting/promptTesting.js";
 import {ResponseTest} from "../promptTesting/types.js";
 import figlet from 'figlet';
-import {configureLLMs} from "../aiAdapters/llmFactory.js";
+import {configureCachingLLMs} from "../aiAdapters/cachingFactory.js";
 
 
 const prompt = "Generate some javascript code to {variable1}"
@@ -40,7 +40,9 @@ const tests: ResponseTest[] = [
 ]
 
 const main = async () => {
-    const llmFactory = configureLLMs({openAI: {apiKey: process.env.OPENAI_API_KEY!}});
+    const llmFactory = configureCachingLLMs({
+        cacheRoot: "llm-cache",
+        openAI: {apiKey: process.env.OPENAI_API_KEY!}});
 
     console.log(figlet.textSync('Simple Prompt Test'));
     const responses = await
