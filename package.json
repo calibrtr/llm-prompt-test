@@ -1,0 +1,32 @@
+{
+  "name": "llm-prompt-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "check-licenses": "license-checker --exclude \"MIT,ISC,Apache-2.0,BSD-2-Clause,BSD-3-Clause,Unlicense,0BSD,CC0-1.0, CC-BY-3.0\""
+  },
+  "keywords": [],
+  "author": "tom@calibrtr.com",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+
+    "commander": "^12.0.0",
+    "figlet": "^1.7.0",
+    "openai": "^4.28.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "@types/node": "^20.11.20",
+    "license-checker": "^25.0.1",
+    "typescript": "^5.3.3",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-typescript": "^7.23.3"
+  }
+}
