@@ -17,7 +17,7 @@ You can add LLM Prompt Test to your project in two ways:
 
 #### Option 1: Install via npm
 
-Use npm (Node Package Manager) to quickly add Calibrtr Tools to your project with the following command:
+Use npm (Node Package Manager) to quickly add LLM Prompt Test to your project with the following command:
 
 ```bash 
 npm install llm-prompt-test
@@ -37,7 +37,7 @@ git clone https://github.com/calibrtr/llm-prompt-test.git
 Here's a quick guide to get you started with LLM Prompt Test. This example demonstrates how to test the output of an LLM for a specific task.
 
 ```javascript
-// Step 1: Import the necessary functions from the Calibrtr Tools library
+// Step 1: Import the necessary functions from the LLM Prompt Test library
 import {executeLLM, testLLMResponse, configureLLMs} from "llm-prompt-test";
 
 // Define the prompt for the LLM
