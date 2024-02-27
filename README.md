@@ -95,7 +95,7 @@ main();
 ```
 
 ## Caching LLM Responses
-Calling LLMs is expensive and time-consuming.  To avoid unnecessary calls, LLM Prompt Test can cache the responses from the LLMs.  This is especially useful when running tests multiple times, or when running tests on the same prompt with different variables.
+Calling LLMs is expensive and time-consuming.  To avoid unnecessary calls, LLM Prompt Test can cache the responses from the LLMs.  This is especially useful when running tests multiple times, or in CI/CD pipelines.
 
 Just replace `configureLLMs` with `configureCachingLLMs`
 ```javascript
