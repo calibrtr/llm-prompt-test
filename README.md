@@ -94,6 +94,40 @@ const main = async () => {
 main();
 ```
 
+## Caching LLM Responses
+Calling LLMs is expensive and time-consuming.  To avoid unnecessary calls, LLM Prompt Test can cache the responses from the LLMs.  This is especially useful when running tests multiple times, or when running tests on the same prompt with different variables.
+
+Just replace `configureLLMs` with `configureCachingLLMs`
+```javascript
+const llmFactory = configureCachingLLMs({
+    cacheRoot: "llm-cache",
+    openAI: {apiKey: process.env.OPENAI_API_KEY!}});
+```
+
+## LLM Providers
+LLM Prompt Test supports multiple LLM providers.  
+You can specify the provider and model to use in the `llmType` object.  
+The following providers are supported:
+- OpenAI
+
+Other providers will be added in the future.  For now, you can configure custom providers when you call `configureLLMs` or `configureCachingLLMs`.
+
+```javascript
+const llmFactory = configureLLMs({
+    openAI: {apiKey: process.env.OPENAI_API_KEY},
+    custom: {
+        myLLM: {
+            executeLLM: async (model: string, prompt: string, resultVariations: number, returnJson: boolean) => {
+                // call custom LLM here
+                // return an array of responses, one per resultVariation
+                return [""];
+            }
+        }
+    }
+});
+
+```
+
 ## Test Types
 ### AIResponseTest
 This uses a second LLM call to verify the output of the first.  It allows for natural
