@@ -12,9 +12,11 @@ Help me rewrite this linked in post: {post}
 
 However, this prompt lacks specificity regarding the desired outcome, leading to potentially varied results from the Language Model (LLM) upon multiple submissions.
 
-This variability underscores the value of LLM Prompt Test. Our platform encourages the definition of clear acceptance criteria before prompt testing. These criteria not only guide the development of your prompt but also leverage LLM's capabilities for testing, allowing criteria to be expressed in natural language.
+This variability underscores the value of LLM Prompt Test. The tool encourages the definition of clear acceptance criteria 
+before prompt testing. These criteria not only guide the development of your prompt but also leverage LLM's capabilities for testing, 
+allowing criteria to be expressed in natural language.
 
-For instance, in the LinkedIn post rewrite scenario, effective acceptance criteria could include:
+For instance, in the LinkedIn post rewrite scenario, acceptance criteria could include:
 
   - The response should be atleast 100 words long and at most 300 words long
   - It should use simple english that's easy to understand 
@@ -23,8 +25,8 @@ For instance, in the LinkedIn post rewrite scenario, effective acceptance criter
   - It should have have a catchy headline 
   - It should have a call to action
 
-LLM Prompt Test employs these criteria to evaluate your prompt through multiple LLM iterations, testing compliance 
-with each specified requirement. Based on the established criteria, the tool can suggest improvements 
+LLM Prompt Test uses these criteria to evaluate your prompt through multiple LLM iterations, testing  
+each specified requirement. Based on your acceptance tests, the tool can also suggest improvements 
 to your prompt, optimizing it for better outcomes.
 
 ## Getting Started
