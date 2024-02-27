@@ -53,7 +53,7 @@ This example demonstrates how to test the output of our linkedin post rewriting 
 
 ```javascript
 // Step 1: Import the necessary functions from the LLM Prompt Test library
-import {executeLLM, testLLMResponse, configureLLMs} from "llm-prompt-test";
+import {executeLLM, testLLMResponse, configureLLMs, generateImprovedPromptCandidates} from "llm-prompt-test";
 
 // Define the prompt for the LLM
 const prompt = "Help me rewrite this linked in post: {post}";
