@@ -1,13 +1,38 @@
 # LLM Prompt Test
 
-Welcome to LLM Prompt Test! This toolset is designed to help you 
-**test** Large Language Models (**LLMs**) **prompts** 
-to ensure they **consistently** meet your expectations. 
+Prompt creation is more of an art than a science.  LLM Prompt Test would like to help you put the engineering back into prompt engineering.
 
+Let's say you want to create a simple app that helps people rewrite linked in posts.
 
-Whether you're developing applications, conducting research, 
-or just exploring the capabilities of LLMs, LLM Prompt Test can streamline the process by 
-automating the testing of prompts.
+You might start with a prompt like this:
+```
+Help me rewrite this linked in post: {post}
+```
+
+But you haven't specified exactly what you want the LLM to do, so if you run this through the LLM 10 times, you'll likely get
+10 very different results.
+
+This is where LLM Prompt Test comes in.  It encourages you to write the acceptance criteria first, and then use that
+to test your prompt.  The acceptance criteria can use the power of LLMs to run the test, so you can write your acceptance 
+criteria in natural language.
+
+In our example above, the acceptance criteria might be:
+```
+The response should be atleast 100 words long and at most 300 words long
+
+It should use simple english that's easy to understand
+
+It should be polite and professional
+
+It should be free of NSFW content
+
+It should have have a catchy headline
+
+It should have a call to action
+```
+
+LLM Prompt Test will then run your prompt through the LLM a number of times, and test that each of these acceptance
+criteria are met.  It can even suggest a better prompt based on your acceptance criteria.
 
 ## Getting Started
 
@@ -30,40 +55,43 @@ git clone https://github.com/calibrtr/llm-prompt-test.git
 
 ## How to Use LLM Prompt Test Tools
 
-Here's a quick guide to get you started with LLM Prompt Test. This example demonstrates how to test the output of an LLM for a specific task.
+Here's a quick guide to get you started with LLM Prompt Test. 
+This example demonstrates how to test the output of our linkedin post rewriting app.
 
 ```javascript
 // Step 1: Import the necessary functions from the LLM Prompt Test library
 import {executeLLM, testLLMResponse, configureLLMs} from "llm-prompt-test";
 
 // Define the prompt for the LLM
-const prompt = "Generate some javascript code to {variable1}";
+const prompt = "Help me rewrite this linked in post: {post}";
 
 // Specify any variables used in the prompt
 const variables = {
-    variable1: "multiply two numbers"
+    post: "I've got a great idea for a new app.  It's going to be a game changer.  I just need a developer to help me build it.  I'm looking for someone who is passionate about coding and wants to make a difference.  If that's you, get in touch!"
 };
 
 // Define the tests to run against the LLM's response
 const tests = [
+    {
+        type: "SizeResponseTest",
+        minWords: 100,
+        maxWords: 500
+    },
     {
         type: "AIResponseTest",
         llmType: {
             provider: "openAI",
             model: "gpt-3.5-turbo"
         },
-        should: "javascript code to add two numbers"
+        should: "use simple english that's easy to understand"
     },
     {
-        type: "SizeResponseTest",
-        minChars: 10,
-        maxChars: 10000,
-        minWords: 3,
-        maxWords: 1000
-    },
-    {
-        type: "FormatResponseTest",
-        expectedFormat: "javascript",
+        type: "AIResponseTest",
+        llmType: {
+            provider: "openAI",
+            model: "gpt-3.5-turbo"
+        },
+        should: "polite and professional"
     },
     {
         type: "NSFWResponseTest",
@@ -71,7 +99,24 @@ const tests = [
             provider: "openAI",
             model: "gpt-3.5-turbo"
         },
-    }
+    },
+    {
+        type: "AIResponseTest",
+        llmType: {
+            provider: "openAI",
+            model: "gpt-3.5-turbo"
+        },
+        should: "have have a catchy headline"
+    },
+    {
+        type: "AIResponseTest",
+        llmType: {
+            provider: "openAI",
+            model: "gpt-3.5-turbo"
+        },
+        should: "have a call to action"
+    },
+    
 ];
 
 // The main function where the action happens
@@ -88,6 +133,20 @@ const main = async () => {
         console.log(responses[i]);
         const results = await testLLMResponse(llmFactory, responses[i], tests);
         console.log(JSON.stringify(results, null, 2));
+    }
+
+    // Generate improved prompt candidates based on the acceptance criteria
+    // using gpt-4-turbo-preview model as it can understand the acceptance criteria and suggest a better prompt
+    // there's nothing stoping you using that better prompt on gpt-3.5-turbo later.
+    const improvedPrompts = await generateImprovedPromptCandidates(llmFactory,
+        {provider: "openAI", model: "gpt-4-turbo-preview"},
+        prompt,
+        5,
+        variables,
+        tests);
+
+    for(const improvedPrompt of improvedPrompts) {
+        console.log(improvedPrompt);
     }
 };
 
@@ -145,7 +204,7 @@ to use a more advanced LLM for these tests.
         provider: "openAI",
         model: "gpt-3.5-turbo"
     },
-    should: "javascript code to add two numbers"
+    should: "use simple english that's easy to understand"
 }
 ```
 

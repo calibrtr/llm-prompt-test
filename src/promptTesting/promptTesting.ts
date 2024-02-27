@@ -184,12 +184,18 @@ export const generateImprovedPromptCandidates = async (llmFactory: LLMFactory,
         Object.keys(variables).length === 0 ? ""
             : 'The prompt includes the following variables: ' + Object.keys(variables).map((v) => `{${v}}`).join(", ") + ". " +
             "These variables should be present in the alternative prompts. ";
+
+    const testJson = JSON.stringify(tests);
+
     const searchPrompt = `Create ${promptCandidates} refined prompt candidates that are highly likely to \\
         consistently generate relevant and coherent responses from ChatGPT. The original prompt is "${prompt}".  \\
         ${variablesString}
+        
+        The following acceptance tests were defined by the prompt auth required to pass for the prompt candidates: ${testJson}
+        
         respond in this JSON format { promptCandidates : string[]}`;
 
-    const responses = await llmFactory.executeLLM(llmType, prompt, 1, true);
+    const responses = await llmFactory.executeLLM(llmType, searchPrompt, 1, true);
     const responseJson : any = JSON.parse(responses[0]);
     return responseJson.promptCandidates;
 }
