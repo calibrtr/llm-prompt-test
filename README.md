@@ -1,38 +1,31 @@
 # LLM Prompt Test
 
-Prompt creation is more of an art than a science.  LLM Prompt Test would like to help you put the engineering back into prompt engineering.
+Crafting prompts is as much an art as it is a science. LLM Prompt Test aims to reintroduce an engineering mindset into 
+the process of prompt engineering, enhancing both precision and effectiveness.
 
-Let's say you want to create a simple app that helps people rewrite linked in posts.
+Consider you're developing an application designed to assist users in rewriting their LinkedIn posts. You might 
+initially draft a prompt like this:
 
-You might start with a prompt like this:
 ```
 Help me rewrite this linked in post: {post}
 ```
 
-But you haven't specified exactly what you want the LLM to do, so if you run this through the LLM 10 times, you'll likely get
-10 very different results.
+However, this prompt lacks specificity regarding the desired outcome, leading to potentially varied results from the Language Model (LLM) upon multiple submissions.
 
-This is where LLM Prompt Test comes in.  It encourages you to write the acceptance criteria first, and then use that
-to test your prompt.  The acceptance criteria can use the power of LLMs to run the test, so you can write your acceptance 
-criteria in natural language.
+This variability underscores the value of LLM Prompt Test. Our platform encourages the definition of clear acceptance criteria before prompt testing. These criteria not only guide the development of your prompt but also leverage LLM's capabilities for testing, allowing criteria to be expressed in natural language.
 
-In our example above, the acceptance criteria might be:
-```
-The response should be atleast 100 words long and at most 300 words long
+For instance, in the LinkedIn post rewrite scenario, effective acceptance criteria could include:
 
-It should use simple english that's easy to understand
+  - The response should be atleast 100 words long and at most 300 words long
+  - It should use simple english that's easy to understand 
+  - It should be polite and professional 
+  - It should be free of NSFW content 
+  - It should have have a catchy headline 
+  - It should have a call to action
 
-It should be polite and professional
-
-It should be free of NSFW content
-
-It should have have a catchy headline
-
-It should have a call to action
-```
-
-LLM Prompt Test will then run your prompt through the LLM a number of times, and test that each of these acceptance
-criteria are met.  It can even suggest a better prompt based on your acceptance criteria.
+LLM Prompt Test employs these criteria to evaluate your prompt through multiple LLM iterations, testing compliance 
+with each specified requirement. Based on the established criteria, the tool can suggest improvements 
+to your prompt, optimizing it for better outcomes.
 
 ## Getting Started
 
