@@ -12,11 +12,15 @@ export {
     ResponseTestsResult,
     ResponseTestPassed,
     ResponseTestsFailed,
+    OnePromptTestResult,
+    PromptFeedback,
 } from "./promptTesting/types.js";
 
 export {
     executeLLM,
     testLLMResponse,
+    generatePromptFeedback,
+    generateImprovedPromptCandidates
 } from "./promptTesting/promptTesting.js";
 
 export {

@@ -2,11 +2,13 @@ import {
     AIResponseTest,
     HateSpeechResponseTest,
     NSFWResponseTest,
+    OnePromptTestResult,
+    PromptFeedback,
     RegexResponseTest,
     ResponseTest,
     ResponseTestFailure,
     ResponseTestResult,
-    ResponseTestsResult,
+    ResponseTestsResult, ResponseTestStatistics,
     SizeResponseTest
 } from "./types.js";
 
@@ -126,6 +128,70 @@ export const executeLLM = async (llmFactory: LLMFactory,
                                  variables: { [key: string]: string }): Promise<string[]> => {
     const resolvedPrompt = resolveVariables(prompt, variables);
     return await llmFactory.executeLLM(llmType, resolvedPrompt, resultVariations, false);
+}
+
+export const generatePromptFeedback = async (llmFactory: LLMFactory,
+                                             llmType: LLMType,
+                                             prompt: string,
+                                             resultVariations: number,
+                                             variables: { [key: string]: string },
+                                             tests: ResponseTest[]): Promise<PromptFeedback> => {
+    const responses = await executeLLM(llmFactory, llmType, prompt, resultVariations, variables);
+    const results: OnePromptTestResult[] = await Promise.all(responses.map(async (response) => {
+        const oneResult = await testLLMResponse(llmFactory, response, tests);
+        return {
+            prompt,
+            response,
+            results: oneResult
+        };
+    }));
+
+    const statistics : ResponseTestStatistics[] = tests.map((test) => {
+        const passed = results.filter((result) => {
+            if(result.results.pass){
+                return true;
+            }
+            else {
+                const thisTestFailed = result.results.failures.some((failure) => failure.test === test);
+                return !thisTestFailed;
+            }
+        }).length;
+        const failed = results.length - passed;
+        return {
+            test,
+            passed,
+            failed,
+            total: results.length
+        }
+    });
+
+
+    return {
+        prompt,
+        resultVariations,
+        rawResults: results,
+        statistics
+    }
+}
+
+export const generateImprovedPromptCandidates = async (llmFactory: LLMFactory,
+                                                       llmType: LLMType,
+                                                       prompt: string,
+                                                       promptCandidates: number,
+                                                       variables: { [key: string]: string },
+                                                       tests: ResponseTest[]) : Promise<string[]> => {
+    const variablesString =
+        Object.keys(variables).length === 0 ? ""
+            : 'The prompt includes the following variables: ' + Object.keys(variables).map((v) => `{${v}}`).join(", ") + ". " +
+            "These variables should be present in the alternative prompts. ";
+    const searchPrompt = `Create ${promptCandidates} refined prompt candidates that are highly likely to \\
+        consistently generate relevant and coherent responses from ChatGPT. The original prompt is "${prompt}".  \\
+        ${variablesString}
+        respond in this JSON format { promptCandidates : string[]}`;
+
+    const responses = await llmFactory.executeLLM(llmType, prompt, 1, true);
+    const responseJson : any = JSON.parse(responses[0]);
+    return responseJson.promptCandidates;
 }
 
 

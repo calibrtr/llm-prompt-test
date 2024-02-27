@@ -68,3 +68,23 @@ export type ResponseTestResult =
 export type ResponseTestsResult =
     | ResponseTestPassed
     | ResponseTestsFailed;
+
+export type OnePromptTestResult = {
+    prompt: string,
+    response: string,
+    results: ResponseTestsResult
+}
+
+export type ResponseTestStatistics = {
+    test: ResponseTest;
+    passed: number;
+    failed: number;
+    total: number;
+}
+
+export type PromptFeedback = {
+    prompt: string;
+    resultVariations: number;
+    statistics : ResponseTestStatistics[];
+    rawResults: OnePromptTestResult[];
+}
