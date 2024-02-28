@@ -200,4 +200,46 @@ export const generateImprovedPromptCandidates = async (llmFactory: LLMFactory,
     return responseJson.promptCandidates;
 }
 
+function cosineSimilarity(vecA: number[], vecB: number[]) {
+    let dotProduct = 0;
+    let normA = 0;
+    let normB = 0;
+
+    for (let i = 0; i < vecA.length; i++) {
+        dotProduct += vecA[i] * vecB[i];
+        normA += vecA[i] ** 2;
+        normB += vecB[i] ** 2;
+    }
+
+    normA = Math.sqrt(normA);
+    normB = Math.sqrt(normB);
+
+    return dotProduct / (normA * normB);
+}
+
+export const calculatePromptStability = async (llmFactory: LLMFactory,
+                                               promptLLMType: LLMType,
+                                                  embeddedLLMType: LLMType,
+                                                  prompt: string,
+                                                  promptVariations: number,
+                                                  variables: { [key: string]: string }): Promise<number> => {
+    const responses = await executeLLM(llmFactory, promptLLMType, prompt, promptVariations, variables);
+    const embeddings =
+        await Promise.all(responses.map((response) => llmFactory.generateEmbedding(embeddedLLMType, response, undefined)));
+    let similarityScoreTotal = 0;
+    for (let i = 0; i < responses.length; i++) {
+        for (let j = i; j < responses.length; j++) {
+            if (i === j) {
+                continue;
+            }
+            const embeddedI = embeddings[i];
+            const embeddedJ = embeddings[j];
+            const score = cosineSimilarity(embeddedI, embeddedJ);
+            similarityScoreTotal += score;
+        }
+    }
+
+    return similarityScoreTotal / (responses.length * (responses.length - 1) / 2);
+}
+
 

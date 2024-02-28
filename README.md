@@ -158,6 +158,27 @@ const llmFactory = configureCachingLLMs({
     openAI: {apiKey: process.env.OPENAI_API_KEY!}});
 ```
 
+## Prompt Stability
+LLM Prompt Test can help you determine how stable your prompt is.  By running the same prompt multiple times, you can see how much the responses vary. 
+This can help you determine if your prompt is too vague.
+
+To do this you need to call calculatePromptStability.  This function will return a number between 0 and 1, 
+where 0 means the responses are completely different every time you call an LLM, and 1 means the responses are semantically the same every time you call the VM.
+
+In most circumstances, you want a prompt to generate similar responses every time you call the LLM, so higher scores are better.  If you're looking for high creativity, you might want a lower score. 
+Which means that each response is quite different, even with the same prompt.
+
+```javascript
+const promptStability = await calculatePromptStability(llmFactory,
+    {provider: "openAI", model: "gpt-4-turbo-preview"},
+    {provider: 'openAI', model: 'text-embedding-3-small'},
+    prompt,
+    10,
+    variables);
+```
+
+You can see a full example [here](./tree/main/src/examples/promptStability.ts)
+
 ## LLM Providers
 LLM Prompt Test supports multiple LLM providers.  
 You can specify the provider and model to use in the `llmType` object.  

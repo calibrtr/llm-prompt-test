@@ -28,4 +28,15 @@ export class OpenAIAdapter implements LLMAdapter {
             .filter((content) => content !== null)
             .map((c) => c as string);
     }
+
+    async generateEmbedding(model: string,
+                            text:string,
+                            dimensions: number | undefined = undefined): Promise<number[]> {
+        const response = await this.#openAI.embeddings.create({
+            model: model,
+            input: text,
+            dimensions: dimensions
+        });
+        return response.data[0].embedding;
+    }
 }

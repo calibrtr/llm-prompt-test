@@ -20,12 +20,13 @@ export {
     executeLLM,
     testLLMResponse,
     generatePromptFeedback,
-    generateImprovedPromptCandidates
+    generateImprovedPromptCandidates,
+    calculatePromptStability
 } from "./promptTesting/promptTesting.js";
 
 export {
     LLMFactory,
-    configureLLMs
+    configureLLMs,
 } from "./aiAdapters/llmFactory.js";
 
 export {
