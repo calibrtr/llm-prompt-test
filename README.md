@@ -1,20 +1,18 @@
 # LLM Prompt Test
 
-Crafting prompts is as much an art as it is a science. LLM Prompt Test aims to reintroduce an engineering mindset into 
-the process of prompt engineering, enhancing both precision and effectiveness.
+Crafting prompts is as much an art as it is a science. LLM Prompt Test aims to add back some engineering to improve precision and effectiveness.
 
-Consider you're developing an application designed to assist users in rewriting their LinkedIn posts. You might 
+Let's say you're developing an application designed to assist users in rewriting LinkedIn posts. You might 
 initially draft a prompt like this:
 
 ```
 Help me rewrite this linked in post: {post}
 ```
 
-However, this prompt lacks specificity regarding the desired outcome, leading to potentially varied results from the Language Model (LLM) upon multiple submissions.
+However, this prompt lacks specificity regarding the desired outcome.  Run this 10 times against your favourite LLM and youll get 10 very different answers.
 
-This variability underscores the value of LLM Prompt Test. The tool encourages the definition of clear acceptance criteria 
-before prompt testing. These criteria not only guide the development of your prompt but also leverage LLM's capabilities for testing, 
-allowing criteria to be expressed in natural language.
+LLM Prompt Test encourages the definition of clear acceptance criteria 
+before prompt testing. These acceptance tests can be written in natural language as we send them to LLMs for evaluation.
 
 For instance, in the LinkedIn post rewrite scenario, acceptance criteria could include:
 
@@ -25,9 +23,8 @@ For instance, in the LinkedIn post rewrite scenario, acceptance criteria could i
   - It should have have a catchy headline 
   - It should have a call to action
 
-LLM Prompt Test uses these criteria to evaluate your prompt through multiple LLM iterations, testing  
-each specified requirement. Based on your acceptance tests, the tool can also suggest improvements 
-to your prompt, optimizing it for better outcomes.
+LLM Prompt Test uses these criteria to evaluate your prompt by requesting multiple variations from the LLM and then testing  
+each specified requirement. Based on your acceptance tests, the tool can also suggest improved prompt candidates.
 
 ## Getting Started
 
