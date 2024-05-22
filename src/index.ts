@@ -21,7 +21,8 @@ export {
     testLLMResponse,
     generatePromptFeedback,
     generateImprovedPromptCandidates,
-    calculatePromptStability
+    calculatePromptStability,
+    executeOneLLMTest,
 } from "./promptTesting/promptTesting.js";
 
 export {

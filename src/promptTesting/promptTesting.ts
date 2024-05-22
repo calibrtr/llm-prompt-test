@@ -83,7 +83,7 @@ const testers: { [responseType: string]: (llmFactory: LLMFactory, response: stri
     FormatResponseTest: formatResponseTest,
 }
 
-const executeOneTest = async (llmFactory: LLMFactory, response: string, test: ResponseTest): Promise<ResponseTestResult> => {
+export const executeOneLLMTest = async (llmFactory: LLMFactory, response: string, test: ResponseTest): Promise<ResponseTestResult> => {
     const tester = testers[test.type];
     if(tester === undefined) {
         return {pass: false, test, message: "Not implemented"};
@@ -96,7 +96,7 @@ export const testLLMResponse = async (llmFactory: LLMFactory, response: string, 
     let failures: ResponseTestFailure[] = [];
     let results = await
         Promise.all(tests.map(async (test) => {
-            const result = await executeOneTest(llmFactory, response, test);
+            const result = await executeOneLLMTest(llmFactory, response, test);
             return {test, result};
         }));
     for (const {test, result} of results) {
